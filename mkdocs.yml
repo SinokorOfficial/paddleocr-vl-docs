@@ -1,0 +1,100 @@
+site_name: PaddleOCR-VL 문서 추출 · 개발 문서
+site_description: PaddleOCR-VL-1.6 + vLLM 기반 문서 추출 서비스의 개발·운영 문서 (공개판)
+site_url: https://sinokorofficial.github.io/paddleocr-vl-docs/
+
+repo_name: paddleocr-vl-docs
+repo_url: https://github.com/SinokorOfficial/paddleocr-vl-docs
+
+docs_dir: docs
+
+# 사내 전용 정보(내부 IP·호스트명·실문서)는 본 공개 리포에 포함하지 않는다.
+
+nav:
+  - 홈: index.md
+  - 시작하기:
+      - 실행 (Docker): setup.md
+      - 환경변수: configuration.md
+  - 시스템:
+      - 아키텍처: architecture.md
+      - 품질 보강 파이프라인: quality.md
+      - 성능: performance.md
+  - API: api.md
+  - 트러블슈팅: troubleshooting.md
+
+theme:
+  name: material
+  language: ko
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: black
+      accent: green
+      toggle:
+        icon: material/weather-night
+        name: 다크 모드로
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: green
+      toggle:
+        icon: material/weather-sunny
+        name: 라이트 모드로
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - navigation.indexes
+    - navigation.top
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.tabs.link
+  font:
+    text: Pretendard
+    code: JetBrains Mono
+  icon:
+    repo: fontawesome/brands/github
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: ¶
+      toc_depth: 3
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+extra:
+  social:
+    - icon: fontawesome/solid/envelope
+      link: mailto:ysh21368@sinokor.co.kr
+      name: 문의 (AI 파트)
+
+copyright: 장금상선 AI 파트
