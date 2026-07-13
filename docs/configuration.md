@@ -10,6 +10,7 @@
 | `VL_MAX_CONCURRENCY` | `9` | 페이지 내 영역 동시 인식 수. CUDA Graph 캡처 배치(≤8)에 맞추려면 `8` |
 | `MAX_PIXELS` | `1310720` | 영역 이미지 픽셀 상한. 고해상도 대형 표 위주 문서는 `786432` 로 ~20% 가속 |
 | `MAX_NEW_TOKENS` | `2048` | 영역당 생성 토큰 상한 (반복 폭주 시 피해 한도) |
+| `PADDLE_PDX_PDF_RENDER_SCALE` | `2.8` | **PDF 내부 렌더 스케일**(≈200dpi). paddlex 기본 2.0(144dpi)은 선이 가늘고 밀집된 표에서 구조 인식 붕괴(셀 값 누락)를 유발 — 상향 필수 |
 | `USE_DOC_ORIENTATION` | `1` | 페이지 방향(90/180/270°) 자동 감지·회전 (PP-LCNet doc_ori) |
 | `EMBED_IMAGES` | `0` | `1`이면 그림을 base64 로 markdown 에 임베드. 기본은 텍스트 전용 |
 | `STAMP_RETRY` | `1` | 빨간 도장 감지 시 도장 제거 재추출 ([품질 보강](quality.md#빨간-도장-자동-재추출) 참조) |
