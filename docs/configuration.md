@@ -27,6 +27,15 @@
 | `MAX_NUM_SEQS` | `10` | 서버 동시 시퀀스 수 |
 | `ENFORCE_EAGER` | `0` | `0` = CUDA Graph(decode-only, **~30% 빠름**) / `1` = eager 롤백 |
 
+## OvisOCR2 엔진 (`scripts/serve_ovis.sh`)
+
+| 변수 | 기본 | 설명 |
+|---|---|---|
+| `ENABLE_OVIS` | `1` | 컨테이너 기동 시 OvisOCR2 서버(:8119) 자동 실행. `0`이면 paddle 단독 |
+| `OVIS_GPU` | `1` | Ovis 가 사용할 GPU 번호 |
+| `OVIS_GPU_MEM_UTIL` | `0.4` | GPU 메모리 점유율 (레이아웃 모델과 동거 고려) |
+| `OVIS_MAX_TOKENS` | `8192` | 페이지당 생성 토큰 상한 (컨텍스트 16384 의 절반) |
+
 ## 권장 프리셋
 
 === "GPU 2장 (12GB×2)"

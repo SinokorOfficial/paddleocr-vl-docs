@@ -7,6 +7,7 @@ FastAPI 기반. 대화형 문서(Swagger UI)는 서비스의 `/docs` 경로에�
 문서 1건 추출. `multipart/form-data`, 필드명 **`file`**.
 
 - 지원 형식: `png` `jpg` `jpeg` `bmp` `tif` `tiff` `webp` `pdf`(다페이지)
+- 엔진 선택: 폼 필드 `model` = `paddle`(기본) | `ovis` — [엔진 비교](architecture.md) 참조
 - 처리 시간: 쪽당 ~2–10초 ([성능](performance.md)) — 클라이언트 타임아웃을 넉넉히 (다페이지 PDF는 분 단위)
 
 === "curl"
@@ -54,6 +55,7 @@ FastAPI 기반. 대화형 문서(Swagger UI)는 서비스의 `/docs` 경로에�
 | 필드 | 의미 |
 |---|---|
 | `elapsed_sec` | 순수 서버 처리시간 (큐 대기 제외) |
+| `engine` | 처리 엔진 (`paddle` / `ovis`) |
 | `pages[].page` | 페이지 순서 번호 (1..N) |
 | `pages[].markdown` | 페이지별 추출 결과 (표 = HTML `<table>`) |
 | `pages[].json` | 파이프라인 원시 결과 (영역 좌표 등) |
@@ -71,6 +73,29 @@ FastAPI 기반. 대화형 문서(Swagger UI)는 서비스의 `/docs` 경로에�
 | `400` | 지원하지 않는 파일 형식 |
 | `503` | 파이프라인 초기화 실패 (VLM 서버 미기동 — 로딩 중일 수 있음) |
 | `500` | 추출 실패 (상세 메시지 포함) |
+
+## `POST /api/extract_async` · `GET /api/jobs/{job_id}`
+
+**접수번호 방식 (장문서 권장).** 동기 API 는 응답까지 수 분간 데이터가 흐르지 않는 긴 연결이라
+중간 프록시가 유휴로 오인해 끊으면 완료된 결과가 유실될 수 있다. 비동기 방식은 짧은 요청만 오가므로 안전하다.
+
+```bash
+# 1) 접수 — 즉시 반환
+curl -X POST http://HOST:8000/api/extract_async -F "file=@document.pdf" -F "model=ovis"
+# → {"job_id": "a1b2c3d4e5f6", "status": "processing", "engine": "ovis"}
+
+# 2) 조회 — 완료 시 result 에 동기 API 와 동일한 전체 결과
+curl http://HOST:8000/api/jobs/a1b2c3d4e5f6
+```
+
+| 상태 | 의미 |
+|---|---|
+| `processing` | 대기 또는 처리 중 (`elapsed_sec` 로 경과 확인) |
+| `done` | 완료 — `result` 필드에 전체 결과 |
+| `error` | 실패 — `error` 필드에 사유 |
+
+- 결과는 완료 후 **1시간 보관** — 클라이언트가 끊겨도 재조회 가능
+- 웹 UI 는 이 방식을 사용한다 (1.5초 간격 폴링)
 
 ## `GET /api/health`
 

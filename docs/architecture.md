@@ -45,11 +45,28 @@ flowchart LR
     end
     subgraph GPU1["GPU 1 (12GB)"]
         LY["PP-DocLayoutV3 (레이아웃)<br/>~4GB"]
+        OV["vLLM #2 — OvisOCR2 0.8B<br/>~5GB (:8119)"]
     end
 ```
 
 - **한 모델을 쪼개는 텐서 병렬(TP)이 아니라 역할 분담**이다. 모델이 작아(0.9B) TP는 통신 오버헤드로 오히려 손해 — 단일 GPU 서빙 + 단계 분리가 최적
 - 같은 GPU에 paddle(레이아웃)과 torch(vLLM)를 함께 올리면 간섭 소지가 있어 분리를 권장 (`LAYOUT_DEVICE=gpu:1`)
+
+## 듀얼 엔진: PaddleOCR-VL vs OvisOCR2
+
+`model` 파라미터로 두 엔진 중 하나를 선택한다 (기본 `paddle`).
+
+| | **PaddleOCR-VL-1.6** (기본) | **OvisOCR2** |
+|---|---|---|
+| 방식 | 2단계 파이프라인 (레이아웃 → 영역별 VLM) | **end-to-end** (페이지 통째 → markdown) |
+| 크기 | 0.9B VLM + 레이아웃 모델 | 0.8B (학습 시 4B 브랜치 활용) |
+| 벤치마크 | OmniDocBench 상위권 | **OmniDocBench v1.6 96.58 (SOTA)**, PureDocBench Avg3 75.06 |
+| 강점 | 영역 좌표(json) 제공, 도장 제거·폭주 재시도 등 보정 파이프라인 | 레이아웃 분할 한계 없음 — 표 밖 부속 박스(합계 등)도 자연스럽게 포함, 밀집 문서에서 더 빠름 |
+| 약점 | 레이아웃이 영역을 잘못 나누면 값 누락 가능 | 영역 좌표 없음, 보정 파이프라인 미적용 (폭주 트림만) |
+| 배치 | GPU 0 (vLLM :8118) | GPU 1 (vLLM :8119) |
+
+- 두 엔진은 **독립 프로세스·독립 GPU** 로 상주하며, 엔진별 락 분리로 서로 다른 엔진의 요청은 동시에 처리된다
+- OvisOCR2 학습: 실문서 + HTML 합성 데이터, SFT·강화학습·증류·모델 융합 조합 (기술 보고서 참조)
 
 ## 레퍼런스 운영 환경
 
@@ -72,3 +89,5 @@ flowchart LR
 | 🤗 온라인 데모 | [HF Spaces — PaddleOCR-VL Online Demo](https://huggingface.co/spaces/PaddlePaddle/PaddleOCR-VL_Online_Demo) |
 | :simple-github: PaddleOCR 저장소 | [github.com/PaddlePaddle/PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR) |
 | ⚡ vLLM (서빙 엔진) | [github.com/vllm-project/vllm](https://github.com/vllm-project/vllm) · [docs.vllm.ai](https://docs.vllm.ai) |
+| 📄 논문 — *OvisOCR2 Technical Report* | [arXiv:2607.13639](https://arxiv.org/abs/2607.13639) |
+| 🤗 모델 카드 (OvisOCR2) | [huggingface.co/ATH-MaaS/OvisOCR2](https://huggingface.co/ATH-MaaS/OvisOCR2) |
