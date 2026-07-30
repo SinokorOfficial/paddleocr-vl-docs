@@ -102,17 +102,33 @@ curl http://HOST:8000/api/jobs/a1b2c3d4e5f6
 ```json
 {
   "server": "ok",
-  "vlm_server_url": "http://127.0.0.1:8118",
+  "engines": {
+    "paddle": {
+      "model": "PaddleOCR-VL",
+      "server_url": "http://127.0.0.1:8118",
+      "reachable": true,
+      "detail": "/v1/models -> 200",
+      "pipeline_loaded": true,
+      "pipeline_error": null,
+      "layout_device": "gpu:1"
+    },
+    "ovis": {
+      "model": "OvisOCR2",
+      "server_url": "http://127.0.0.1:8119",
+      "reachable": true,
+      "detail": "/v1/models -> 200",
+      "max_tokens": 8192
+    }
+  },
   "vlm_reachable": true,
-  "vlm_model": "PaddleOCR-VL",
-  "pipeline_loaded": true,
-  "pipeline_error": null,
-  "layout_device": "gpu:1"
+  "ovis_reachable": true,
+  "pipeline_loaded": true
 }
 ```
 
-- `vlm_reachable=true` + `pipeline_loaded=true` 면 추출 가능 상태
-- 기동 직후에는 `pipeline_loaded=false` 일 수 있다 (첫 추출 시 지연 로딩)
+- **`engines.paddle` / `engines.ovis`** 가 엔진별 대칭 상태 — `reachable=true` 면 해당 엔진 사용 가능
+- 최상위 `vlm_reachable` 등은 **하위 호환용(deprecated)** — 신규 연동은 `engines.*` 사용
+- 기동 직후 `pipeline_loaded=false` 는 정상 (첫 추출 시 지연 로딩)
 
 ## 운영 메모
 
