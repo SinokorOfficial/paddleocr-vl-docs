@@ -47,12 +47,11 @@
 
 ## 참고 자료
 
-| 자료 | 링크 |
-|---|---|
-| 📄 논문 (PaddleOCR-VL, 0.9B VLM) | [arXiv:2510.14528](https://arxiv.org/abs/2510.14528) |
-| 🤗 모델 카드 | [PaddlePaddle/PaddleOCR-VL-1.6](https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6) |
-| :simple-github: PaddleOCR | [github.com/PaddlePaddle/PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR) |
-| ⚡ vLLM | [github.com/vllm-project/vllm](https://github.com/vllm-project/vllm) |
+| 모델/기술 | 논문 | 모델 카드 |
+|---|---|---|
+| **PaddleOCR-VL-1.6** (기본) | [arXiv:2510.14528](https://arxiv.org/abs/2510.14528) | [PaddlePaddle/PaddleOCR-VL-1.6](https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6) |
+| **OvisOCR2** (대안) | [arXiv:2607.13639](https://arxiv.org/abs/2607.13639) | [ATH-MaaS/OvisOCR2](https://huggingface.co/ATH-MaaS/OvisOCR2) |
+| vLLM (서빙) | — | [github.com/vllm-project/vllm](https://github.com/vllm-project/vllm) |
 
 레퍼런스 하드웨어·운영 환경은 [아키텍처 → 레퍼런스 운영 환경](architecture.md#레퍼런스-운영-환경) 참조.
 

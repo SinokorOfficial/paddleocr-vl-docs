@@ -82,12 +82,24 @@ flowchart LR
 
 ## 모델·기술 참고 자료
 
+### PaddleOCR-VL-1.6 (기본 엔진)
+
 | 자료 | 링크 |
 |---|---|
 | 📄 논문 — *PaddleOCR-VL: Boosting Multilingual Document Parsing via a 0.9B Ultra-Compact Vision-Language Model* | [arXiv:2510.14528](https://arxiv.org/abs/2510.14528) |
-| 🤗 모델 카드 (PaddleOCR-VL-1.6) | [huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6](https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6) |
+| 🤗 모델 카드 | [huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6](https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6) |
 | 🤗 온라인 데모 | [HF Spaces — PaddleOCR-VL Online Demo](https://huggingface.co/spaces/PaddlePaddle/PaddleOCR-VL_Online_Demo) |
-| :simple-github: PaddleOCR 저장소 | [github.com/PaddlePaddle/PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR) |
-| ⚡ vLLM (서빙 엔진) | [github.com/vllm-project/vllm](https://github.com/vllm-project/vllm) · [docs.vllm.ai](https://docs.vllm.ai) |
-| 📄 논문 — *OvisOCR2 Technical Report* | [arXiv:2607.13639](https://arxiv.org/abs/2607.13639) |
-| 🤗 모델 카드 (OvisOCR2) | [huggingface.co/ATH-MaaS/OvisOCR2](https://huggingface.co/ATH-MaaS/OvisOCR2) |
+| :simple-github: 저장소 | [github.com/PaddlePaddle/PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR) |
+
+### OvisOCR2 (대안 엔진)
+
+| 자료 | 링크 |
+|---|---|
+| 📄 논문 — *OvisOCR2 Technical Report* (0.8B end-to-end, OmniDocBench v1.6 96.58 SOTA) | [arXiv:2607.13639](https://arxiv.org/abs/2607.13639) |
+| 🤗 모델 카드 | [huggingface.co/ATH-MaaS/OvisOCR2](https://huggingface.co/ATH-MaaS/OvisOCR2) |
+
+### 공통 인프라
+
+| 자료 | 링크 |
+|---|---|
+| ⚡ vLLM (서빙 엔진 — 두 모델 공용) | [github.com/vllm-project/vllm](https://github.com/vllm-project/vllm) · [docs.vllm.ai](https://docs.vllm.ai) |
